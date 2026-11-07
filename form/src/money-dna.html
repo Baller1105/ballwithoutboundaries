@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sports Money DNA | Ball Without Boundaries</title>
+<meta name="description" content="How does your family really pay for the game? Take the 4-minute Sports Money DNA and find your family's type.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#10233F; --navy-2:#0B1A31; --navy-3:#172F52;
+    --green:#38B259; --green-2:#2E9A4C; --green-glow:rgba(56,178,89,.35);
+    --sky:#1DADE0; --ball:#EEE865; --chalk:#F4FAFB; --steel:#D0D3D1; --muted:#9FB0C6;
+    --radius:18px;
+    --display:"Saira Condensed","Arial Narrow",Impact,sans-serif;
+    --body:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--body); color:var(--chalk); background:var(--navy-2);
+    min-height:100%; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  }
+  /* ---------- Stadium background ---------- */
+  .stadium{position:fixed; inset:0; z-index:0; overflow:hidden;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(29,173,224,.18), transparent 60%),
+      radial-gradient(1000px 600px at 90% -5%, rgba(56,178,89,.16), transparent 60%),
+      linear-gradient(180deg,var(--navy) 0%, var(--navy-2) 70%);
+  }
+  .stadium::before{ /* light beams */
+    content:""; position:absolute; inset:-20% -10% auto -10%; height:80%;
+    background:
+      conic-gradient(from 200deg at 10% 0%, transparent 0 10deg, rgba(255,255,255,.06) 12deg, transparent 22deg),
+      conic-gradient(from 140deg at 90% 0%, transparent 0 10deg, rgba(255,255,255,.06) 12deg, transparent 22deg);
+    filter:blur(2px);
+  }
+  .field{ /* turf + yard lines at the bottom */
+    position:absolute; left:-10%; right:-10%; bottom:-38vh; height:70vh;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.09) 0 2px, transparent 2px 11%),
+      repeating-linear-gradient(90deg, #1f7a3c 0 5.5%, #23863f 5.5% 11%);
+    transform:perspective(600px) rotateX(62deg); transform-origin:top center;
+    box-shadow:0 -40px 120px rgba(56,178,89,.25) inset; opacity:.55;
+  }
+  .float-ball{position:absolute; opacity:.07; animation:drift 18s ease-in-out infinite}
+  @keyframes drift{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-24px) rotate(25deg)}}
+
+  /* ---------- Layout ---------- */
+  .wrap{position:relative; z-index:1; max-width:760px; margin:0 auto; padding:20px 18px 120px; min-height:100vh; display:flex; flex-direction:column}
+  header.top{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 0 14px}
+  header.top img{height:50px; width:auto; background:var(--chalk); padding:6px 12px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  .badge{font-family:var(--display); font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:13px;
+    color:var(--navy); background:var(--green); padding:6px 12px; border-radius:999px; transform:skewX(-10deg)}
+  .badge span{display:inline-block; transform:skewX(10deg)}
+
+  /* ---------- Scoreboard progress ---------- */
+  .scoreboard{display:none; align-items:center; gap:14px; background:linear-gradient(180deg,#0A1628,#0E1F38);
+    border:2px solid #22406A; border-radius:14px; padding:10px 14px; box-shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06)}
+  .scoreboard.show{display:flex}
+  .sb-label{font-family:var(--display); font-weight:700; font-size:12px; letter-spacing:.16em; color:var(--muted); text-transform:uppercase}
+  .sb-num{font-family:var(--display); font-weight:900; font-size:30px; line-height:1; color:var(--ball); text-shadow:0 0 14px rgba(238,232,101,.45); font-variant-numeric:tabular-nums}
+  .sb-num small{font-size:16px; color:var(--muted); text-shadow:none}
+  .sb-track{flex:1; height:12px; border-radius:999px; background:#0A1426; border:1px solid #22406A; overflow:hidden; position:relative}
+  .sb-fill{height:100%; width:0; background:linear-gradient(90deg,var(--green-2),var(--green) 60%,#6EE38F); border-radius:999px;
+    box-shadow:0 0 18px var(--green-glow); transition:width .6s cubic-bezier(.2,.8,.2,1)}
+  .sb-ball{position:absolute; top:50%; width:18px; height:18px; margin:-9px 0 0 -9px; left:0; transition:left .6s cubic-bezier(.2,.8,.2,1)}
+
+  /* ---------- Cards / screens ---------- */
+  main{flex:1; display:flex; align-items:flex-start; padding-top:18px}
+  .screen{width:100%; animation:enter .5s cubic-bezier(.2,.8,.2,1)}
+  @keyframes enter{from{opacity:0; transform:translateY(18px)}to{opacity:1; transform:none}}
+  .card{background:linear-gradient(180deg,rgba(23,47,82,.92),rgba(16,35,63,.95)); border:1px solid rgba(255,255,255,.08);
+    border-radius:var(--radius); padding:28px 24px; box-shadow:0 30px 80px rgba(0,0,0,.45); backdrop-filter:blur(6px); position:relative; overflow:hidden}
+  .card::after{content:""; position:absolute; right:-60px; top:-60px; width:200px; height:200px; border-radius:50%;
+    background:radial-gradient(circle, rgba(56,178,89,.18), transparent 70%)}
+
+  .eyebrow{font-family:var(--display); font-weight:800; letter-spacing:.18em; text-transform:uppercase; font-size:13px; color:var(--green)}
+  h1,h2,.jersey{font-family:var(--display); font-weight:900; font-style:italic; text-transform:uppercase; letter-spacing:.01em}
+  h1{font-size:clamp(40px,8vw,64px); line-height:.92; margin:10px 0 14px}
+  h1 em{color:var(--green); font-style:italic}
+  h2{font-size:clamp(28px,5.6vw,40px); line-height:1; margin:6px 0 8px}
+  p.lead{font-size:17px; line-height:1.55; color:#D9E3EF}
+  .help{color:var(--muted); font-size:14px; margin-bottom:18px}
+
+  .hero-logo{display:block; width:min(380px,86%); margin:0 auto 14px; background:radial-gradient(ellipse at center, #F4FAFB 0 58%, rgba(244,250,251,0) 72%); padding:18px 22px; filter:drop-shadow(0 18px 30px rgba(0,0,0,.35))}
+  .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:22px 0}
+  .stat{background:rgba(10,22,40,.6); border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:14px 10px; text-align:center}
+  .stat b{display:block; font-family:var(--display); font-weight:900; font-style:italic; font-size:30px; color:var(--ball)}
+  .stat span{font-size:12px; color:var(--muted); line-height:1.3; display:block}
+  .trust{display:flex; flex-wrap:wrap; gap:8px 16px; margin:18px 0 6px; font-size:14px; color:#CFE0EE}
+  .trust div::before{content:"✓"; color:var(--green); font-weight:800; margin-right:6px}
+
+  /* Question header with jersey number */
+  .qhead{display:flex; gap:16px; align-items:flex-start; margin-bottom:6px}
+  .jersey{flex:none; width:64px; height:70px; position:relative; display:grid; place-items:center; font-size:30px; color:var(--navy)}
+  .jersey svg{position:absolute; inset:0}
+  .jersey span{position:relative; top:6px}
+
+  /* Options */
+  .opts{display:grid; gap:10px; margin-top:8px}
+  .opts.two{grid-template-columns:1fr 1fr}
+  @media (max-width:520px){.opts.two{grid-template-columns:1fr}}
+  .opt{display:flex; align-items:center; gap:12px; text-align:left; width:100%; cursor:pointer; font:600 16px/1.3 var(--body); color:var(--chalk);
+    background:rgba(10,22,40,.55); border:2px solid rgba(255,255,255,.09); border-radius:14px; padding:14px 16px;
+    transition:transform .15s, border-color .15s, background .15s, box-shadow .15s}
+  .opt:hover{border-color:rgba(56,178,89,.6); transform:translateY(-1px)}
+  .opt:focus-visible{outline:3px solid var(--sky); outline-offset:2px}
+  .opt .tick{flex:none; width:24px; height:24px; border-radius:7px; border:2px solid #4A6488; display:grid; place-items:center; transition:.15s}
+  .opt.radio .tick{border-radius:50%}
+  .opt[aria-checked="true"]{border-color:var(--green); background:linear-gradient(180deg,rgba(56,178,89,.22),rgba(56,178,89,.10)); box-shadow:0 0 0 4px rgba(56,178,89,.12)}
+  .opt[aria-checked="true"] .tick{background:var(--green); border-color:var(--green)}
+  .opt[aria-checked="true"] .tick::after{content:""; width:10px; height:6px; border:3px solid var(--navy); border-top:0; border-right:0; transform:rotate(-45deg) translate(1px,-1px)}
+  .opt .emo{font-size:20px; flex:none}
+  .group-label{font-family:var(--display); font-weight:800; letter-spacing:.14em; text-transform:uppercase; font-size:12px; color:var(--sky); margin:14px 2px 2px}
+
+  /* Scale */
+  .scale{display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:14px}
+  .scale .opt{flex-direction:column; justify-content:center; padding:16px 6px; text-align:center; gap:6px}
+  .scale .opt b{font-family:var(--display); font-size:34px; font-style:italic; line-height:1}
+  .scale .opt small{font-size:11px; color:var(--muted); font-weight:500}
+  .scale-ends{display:flex; justify-content:space-between; font-size:13px; color:var(--muted); margin-top:8px}
+
+  textarea,input[type=email],input[type=text]{width:100%; font:500 16px/1.5 var(--body); color:var(--chalk); background:rgba(10,22,40,.6);
+    border:2px solid rgba(255,255,255,.12); border-radius:14px; padding:14px 16px; margin-top:12px; resize:vertical}
+  textarea:focus,input:focus{outline:none; border-color:var(--green); box-shadow:0 0 0 4px rgba(56,178,89,.15)}
+
+  /* Buttons */
+  .actions{display:flex; gap:10px; align-items:center; margin-top:22px}
+  .btn{font-family:var(--display); font-weight:900; font-style:italic; text-transform:uppercase; letter-spacing:.06em; font-size:20px;
+    border:0; cursor:pointer; border-radius:14px; padding:15px 26px; color:var(--navy); background:linear-gradient(180deg,#4CCB6D,var(--green));
+    box-shadow:0 8px 0 var(--green-2), 0 14px 30px rgba(56,178,89,.35); transition:transform .1s, box-shadow .1s, opacity .2s}
+  .btn:active{transform:translateY(5px); box-shadow:0 3px 0 var(--green-2), 0 8px 18px rgba(56,178,89,.3)}
+  .btn[disabled]{opacity:.35; cursor:not-allowed; box-shadow:0 8px 0 #24603a}
+  .btn.ghost{background:transparent; color:var(--muted); box-shadow:none; font-size:16px; padding:12px 10px}
+  .btn.big{width:100%; font-size:24px; padding:18px}
+  .hint{font-size:13px; color:var(--muted); margin-left:auto}
+
+  /* Results: trading card */
+  .result-wrap{display:grid; gap:18px}
+  .tcard{position:relative; border-radius:22px; padding:6px; background:linear-gradient(135deg,var(--c1),var(--c2)); box-shadow:0 30px 80px rgba(0,0,0,.5);
+    animation:flip .9s cubic-bezier(.2,.8,.2,1)}
+  @keyframes flip{from{transform:perspective(900px) rotateY(80deg) scale(.9); opacity:0}to{transform:none; opacity:1}}
+  .tcard-in{border-radius:18px; background:linear-gradient(180deg,#132C50,#0C1B33); padding:22px; position:relative; overflow:hidden}
+  .tcard-in::before{content:""; position:absolute; inset:0; background:repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 10px, transparent 10px 20px)}
+  .tc-top{display:flex; justify-content:space-between; align-items:center; position:relative}
+  .tc-top img{height:38px; background:var(--chalk); padding:4px 8px; border-radius:8px}
+  .tc-tag{font-family:var(--display); font-weight:800; letter-spacing:.14em; font-size:12px; text-transform:uppercase; color:var(--navy); background:var(--c1); padding:5px 10px; border-radius:6px}
+  .tc-emoji{font-size:84px; text-align:center; margin:18px 0 4px; position:relative; filter:drop-shadow(0 10px 20px rgba(0,0,0,.5))}
+  .tc-name{font-family:var(--display); font-weight:900; font-style:italic; text-transform:uppercase; font-size:clamp(36px,8vw,52px); line-height:.95; text-align:center; position:relative}
+  .tc-name small{display:block; font-size:16px; letter-spacing:.2em; color:var(--c1); font-style:normal; margin-bottom:6px}
+  .tc-desc{text-align:center; color:#D6E2EF; font-size:16px; line-height:1.55; margin:12px auto 0; max-width:520px; position:relative}
+  .tc-stats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:18px; position:relative}
+  .tc-stats div{background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:10px; text-align:center}
+  .tc-stats b{display:block; font-family:var(--display); font-weight:900; font-style:italic; font-size:19px; line-height:1.15; color:var(--c1)}
+  .tc-stats span{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em}
+  .play{background:rgba(10,22,40,.6); border:1px dashed rgba(56,178,89,.5); border-radius:16px; padding:18px}
+  .play h3{font-family:var(--display); font-weight:900; font-style:italic; text-transform:uppercase; font-size:24px; color:var(--green)}
+  .play p{color:#D6E2EF; margin-top:6px; line-height:1.55}
+  .fine{font-size:12px; color:#7F92AC; line-height:1.5; margin-top:16px}
+  .confetti{position:fixed; inset:0; pointer-events:none; z-index:5}
+
+  footer.foot{position:relative; z-index:1; text-align:center; font-size:12px; color:#7F92AC; padding:18px}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+<div class="stadium" aria-hidden="true">
+  <div class="field"></div>
+  <svg class="float-ball" style="left:6%;top:22%;width:120px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#fff"/><path d="M20 20 Q50 50 20 80 M80 20 Q50 50 80 80" stroke="#10233F" stroke-width="4" fill="none" stroke-dasharray="6 5"/></svg>
+  <svg class="float-ball" style="right:5%;top:48%;width:150px;animation-delay:-6s" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#EEE865"/><path d="M14 30 Q50 52 86 30 M14 70 Q50 48 86 70" stroke="#10233F" stroke-width="4" fill="none" stroke-dasharray="6 5"/></svg>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <img src="{{LOGO_WORDMARK}}" alt="Ball Without Boundaries">
+    <div class="badge"><span>Sports Money DNA</span></div>
+  </header>
+
+  <div class="scoreboard" id="scoreboard" aria-hidden="true">
+    <div><div class="sb-label">Question</div><div class="sb-num" id="sbNum">01<small>/12</small></div></div>
+    <div class="sb-track"><div class="sb-fill" id="sbFill"></div>
+      <svg class="sb-ball" id="sbBall" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#fff" stroke="#10233F" stroke-width="1.5"/><path d="M10 4l4 3-1.5 4.5h-5L6 7z" fill="#10233F"/></svg>
+    </div>
+  </div>
+
+  <main id="app" aria-live="polite"></main>
+</div>
+<footer class="foot">© Ball Without Boundaries · Your answers are private and only shared as group totals. We never sell your data.</footer>
+<canvas class="confetti" id="confetti"></canvas>
+
+<script>
+/* =====================  CONFIG  ===================== */
+// Paste your Google Apps Script web-app URL here (see form/README.md). Leave blank to test without saving.
+const SUBMIT_URL = "";
+const JOIN_URL   = "https://ballwithoutboundaries.com/join"; // TODO: your Circle community invite link
+
+/* =====================  QUESTIONS  ===================== */
+const PAY = [
+  ["paycheck","💵","Out of the regular paycheck (month to month)"],
+  ["sports_savings","🎯","Savings we set aside specifically for sports"],
+  ["general_savings","🏦","General savings or emergency fund"],
+  ["cc_full","💳","Credit card, paid off in full each month"],
+  ["cc_balance","🔁","Credit card, carrying a balance"],
+  ["bnpl","🧾","Buy now, pay later (Klarna, Afterpay, Affirm…)"],
+  ["club_plan","📅","The club's or program's payment plan"],
+  ["heloc","🏠","Home equity line (HELOC) or home equity loan"],
+  ["refi","🔑","Cash-out refinance on our home"],
+  ["personal_loan","📄","Personal loan"],
+  ["retirement","⏳","Borrowing from or withdrawing from a 401(k) or retirement account"],
+  ["family","👵","Money from grandparents or family"],
+  ["second_job","🌙","Second job, overtime or a side hustle"],
+  ["fundraising","🤝","Fundraising, sponsorships or scholarships"],
+  ["selling","🏷️","Selling things"],
+  ["other","✳️","Something else"]
+];
+
+const Q = [
+  {id:"kids", t:"single", q:"How many of your kids play organized sports right now?", opts:["1","2","3","4+"], cols:2},
+  {id:"level", t:"single", q:"What level is your most competitive athlete playing at?", opts:["Rec / community","School team","Club / travel","Elite / national / showcase","Multiple levels"]},
+  {id:"spend", t:"single", q:"Roughly how much does your family spend on youth sports per year, all-in?", help:"All kids, all costs: fees, travel, hotels, gear, lessons, food on the road.",
+    opts:["Under $1,000","$1,000 – $2,500","$2,500 – $5,000","$5,000 – $10,000","$10,000 – $20,000","$20,000+","Honestly, I don't know"], cols:2},
+  {id:"biggest", t:"single", q:"Which is the biggest single cost?", opts:["Club or team fees","Travel & hotels","Private lessons or training","Camps & clinics","Equipment & uniforms","Tournament & showcase fees","Food on the road"], cols:2},
+  {id:"pay_methods", t:"multi", q:"How do you pay for it?", help:"Check everything that applies. This is the question nobody else is asking, so be honest. It's anonymous.", opts:PAY, key:true},
+  {id:"pay_main", t:"single", q:"Of those, which ONE pays for the most?", dyn:"pay_methods", opts:PAY},
+  {id:"sports_debt", t:"single", q:"How much of your family's debt right now is because of youth sports?", opts:["None","Less than $1,000","$1,000 – $5,000","$5,000 – $15,000","$15,000 – $30,000","$30,000+","Not sure"], cols:2},
+  {id:"cutbacks", t:"multi", q:"To pay for sports, have you cut back on any of these?", help:"Check all that apply.",
+    opts:[["retirement_contrib","⏳","Retirement contributions"],["college","🎓","College savings (529, etc.)"],["emergency","🛟","Emergency savings"],["vacations","🏖️","Family vacations"],["home","🔧","Home repairs"],["health","🩺","Our own health or medical care"],["other_debt","📉","Paying down other debt"],["none","✅","None of these"]], cols:2},
+  {id:"stress", t:"scale", q:"How stressful is paying for sports for your family?", ends:["No stress","Keeps me up at night"], labels:["Easy","Fine","Tight","Hard","Brutal"]},
+  {id:"pull_out", t:"single", q:"Be honest: would you ever pull your child out of a sport because of money?", opts:["No, we'll find a way","Only if we truly had no choice","We've considered it","We've already had to"]},
+  {id:"partner", t:"single", q:"Do you and your partner ever disagree about sports spending?", opts:["Never","Sometimes","Often","It's a big source of tension","Not applicable"]},
+  {id:"help_with", t:"single", q:"If someone could help with ONE thing, what would it be?", opts:["Lowering the cost of sports","Paying off the debt it created","Planning ahead for next season","Getting on the same page with my partner","Finding scholarships & sponsorships","Protecting retirement & college savings"]},
+];
+
+const DEEP = [
+  {id:"income", t:"single", q:"Household income range", help:"Optional. Helps us compare families fairly.", opts:["Under $50K","$50K – $75K","$75K – $100K","$100K – $150K","$150K – $250K","$250K+","Prefer not to say"], cols:2, optional:true},
+  {id:"sport", t:"text", q:"What's your child's main sport, and at what age did spending really take off?", ph:"e.g. Volleyball, age 11", optional:true},
+  {id:"borrowed_amt", t:"single", q:"If you used home equity, a refinance, a personal loan or retirement money, roughly how much went to sports?", opts:["Didn't use these","Under $5K","$5K – $15K","$15K – $30K","$30K – $50K","$50K+"], cols:2, optional:true},
+  {id:"rate_known", t:"single", q:"Do you know the interest rate on the debt you use for sports?", opts:["Yes, exactly","Roughly","No idea","No debt"], cols:2, optional:true},
+  {id:"payoff", t:"single", q:"At your current pace, how long until your sports-related debt is paid off?", opts:["Paid off monthly","Under 6 months","6 – 12 months","1 – 3 years","3+ years","Never at this rate"], cols:2, optional:true},
+  {id:"planning", t:"single", q:"Do you plan ahead for the season, or handle costs as they come?", opts:["We plan the whole year","We plan somewhat","We handle it as it comes","Bills surprise us every season"], optional:true},
+  {id:"driver", t:"single", q:"What's driving the spending most?", opts:["My child's love of the game","College scholarship hopes","Keeping up with the team","Coach or club pressure","Development & training needs","Pro aspirations"], optional:true},
+  {id:"payback", t:"single", q:"Do you believe the spending will \"pay back\" (scholarship, pro, etc.)?", opts:["Yes, definitely","Maybe","Probably not, and that's OK","I don't think about it that way"], optional:true},
+  {id:"wish", t:"long", q:"In one sentence: what do you wish you'd known about the cost before you started?", ph:"Type your answer…", optional:true},
+  {id:"contact", t:"contact", q:"Want a founding seat, or a 15-minute follow-up?", help:"Totally optional. Leave blank to stay anonymous.", optional:true},
+];
+
+/* =====================  DNA TYPES  ===================== */
+const DNA = {
+  planner:{emoji:"🎯", name:"The Planner", c1:"#38B259", c2:"#1DADE0", tag:"Hall of Famer",
+    desc:"You fund the game on purpose. Sports money is set aside before the season starts, so surprises don't wreck the budget.",
+    play:"Your next play: sharpen the edges. Travel hacks, team-buy gear and a multi-season plan, and help the families on your team do the same."},
+  grinder:{emoji:"💪", name:"The Cash-Flow Grinder", c1:"#1DADE0", c2:"#38B259", tag:"Gritty Starter",
+    desc:"You're making it work out of every paycheck. You're tough and committed, but one surprise tournament can knock the whole month off balance.",
+    play:"Your ONE bill: build a Season Fund. A small automatic transfer each payday turns next season from a scramble into a plan."},
+  swiper:{emoji:"💳", name:"The Card Swiper", c1:"#EEE865", c2:"#38B259", tag:"Points Player",
+    desc:"You run it through the card and pay it off. That's smart if the points pay for travel, risky if the spending quietly creeps.",
+    play:"Your next play: set a season cap and point every reward at team travel. Make the card work for you, not the other way around."},
+  carrier:{emoji:"🔁", name:"The Balance Carrier", c1:"#F5A524", c2:"#EEE865", tag:"Comeback Story",
+    desc:"You're keeping the dream alive on credit, and you're far from alone. The catch: sports is costing you interest on top of the fees.",
+    play:"Your ONE bill: the card. A clear payoff plan, a rate you actually know, and a strategy so next season isn't borrowed too."},
+  tapper:{emoji:"🏠", name:"The Equity Tapper", c1:"#FF7A59", c2:"#F5A524", tag:"All-In",
+    desc:"Your home is helping pay for the game. That shows how much you'd sacrifice for your kids, and it's a big lever to understand fully.",
+    play:"Your ONE bill: know exactly what that borrowing costs and build a plan to recapture it, so the house isn't funding next season too."},
+  future:{emoji:"⏳", name:"The Future Borrower", c1:"#B78CFF", c2:"#1DADE0", tag:"Long Game",
+    desc:"Today's game is being funded by your future self, through retirement money or skipped contributions.",
+    play:"Your ONE bill: protect your retirement first. Then we'll find scholarships, sponsorships and a funding plan that doesn't cost your future."},
+  village:{emoji:"🤝", name:"The Village-Funded", c1:"#38B259", c2:"#EEE865", tag:"Team Player",
+    desc:"It takes a village, and you've got one: grandparents, side hustles, fundraisers. That's love in action.",
+    play:"Your next play: make it sustainable. Plan for the day the village changes, so the game doesn't stop when the help does."},
+};
+function scoreDNA(a){
+  const m = a.pay_main || (a.pay_methods||[])[0] || "paycheck";
+  const cut = a.cutbacks||[];
+  let k = ({paycheck:"grinder",general_savings:"grinder",other:"grinder",sports_savings:"planner",cc_full:"swiper",
+    cc_balance:"carrier",bnpl:"carrier",club_plan:"carrier",heloc:"tapper",refi:"tapper",personal_loan:"tapper",
+    retirement:"future",family:"village",second_job:"village",fundraising:"village",selling:"village"})[m] || "grinder";
+  if (cut.includes("retirement_contrib") && ["planner","grinder","swiper","village"].includes(k)) k = "future";
+  return k;
+}
+
+/* =====================  STATE / RENDER  ===================== */
+const app = document.getElementById("app");
+const A = JSON.parse(sessionStorage.getItem("bwb_dna")||"{}");
+let flow = [...Q], i = -1, deep = false;
+const save = () => sessionStorage.setItem("bwb_dna", JSON.stringify(A));
+const pad = n => String(n).padStart(2,"0");
+const el = (h) => { const d=document.createElement("div"); d.innerHTML=h.trim(); return d.firstElementChild; };
+
+function jersey(n){
+  return `<div class="jersey" aria-hidden="true"><svg viewBox="0 0 64 70"><path d="M18 4 L26 2 Q32 10 38 2 L46 4 L62 14 L56 28 L50 25 L50 68 L14 68 L14 25 L8 28 L2 14 Z" fill="#38B259" stroke="#10233F" stroke-width="3" stroke-linejoin="round"/><path d="M26 2 Q32 10 38 2" stroke="#F4FAFB" stroke-width="3" fill="none"/></svg><span>${n}</span></div>`;
+}
+function setBoard(){
+  const sb = document.getElementById("scoreboard");
+  if (i<0 || i>=flow.length){ sb.classList.remove("show"); return; }
+  sb.classList.add("show");
+  const total = flow.length, pct = ((i)/total)*100;
+  document.getElementById("sbNum").innerHTML = `${pad(i+1)}<small>/${pad(total)}</small>`;
+  document.getElementById("sbFill").style.width = pct+"%";
+  document.getElementById("sbBall").style.left = `calc(${pct}% )`;
+}
+
+function intro(){
+  i=-1; setBoard();
+  app.innerHTML = "";
+  app.appendChild(el(`<section class="screen"><div class="card">
+    <img class="hero-logo" src="{{LOGO_FULL}}" alt="Ball Without Boundaries">
+    <div class="eyebrow" style="text-align:center">The Sports Money DNA · 4 minutes</div>
+    <h1 style="text-align:center">How does your family <em>really</em> pay for the game?</h1>
+    <p class="lead" style="text-align:center">Every report says youth sports costs keep climbing, and that a lot of families "go into debt." But nobody has asked <b>how</b>. Credit cards? Home equity? A second job? Grandma?<br><br>We're finding out, so we can help sports families keep their kids playing <b>without wrecking everything else</b>.</p>
+    <div class="stats">
+      <div class="stat"><b>+46%</b><span>rise in what families spend on a child's main sport since 2019</span></div>
+      <div class="stat"><b>$40B+</b><span>spent by parents on youth sports every year</span></div>
+      <div class="stat"><b>?</b><span>how families actually pay for it. Until now.</span></div>
+    </div>
+    <div class="trust"><div>Anonymous if you want</div><div>Never sold, ever</div><div>Shared only as group totals</div></div>
+    <div class="actions"><button class="btn big" id="go">Play ball →</button></div>
+    <p class="fine" style="text-align:center">Source for stats: Aspen Institute Project Play, 2024 parent survey.</p>
+  </div></section>`));
+  document.getElementById("go").onclick = () => { i=0; render(); };
+}
+
+function render(){
+  setBoard();
+  const q = flow[i];
+  let opts = q.opts;
+  if (q.dyn){ const chosen = A[q.dyn]||[]; opts = q.opts.filter(o => chosen.includes(o[0])); if (A[q.id] && !chosen.includes(A[q.id])) { delete A[q.id]; save(); } if (opts.length<=1){ A[q.id] = opts[0]?opts[0][0]:null; save(); return next(); } }
+  const num = i+1;
+  const card = el(`<section class="screen"><div class="card">
+    <div class="qhead">${jersey(num)}<div>
+      <div class="eyebrow">${deep && i>=Q.length ? "Deep dive · optional" : q.key ? "The key question" : "Sports Money DNA"}</div>
+      <h2 id="qt">${q.q}</h2>${q.help?`<p class="help">${q.help}</p>`:""}
+    </div></div>
+    <div id="body"></div>
+    <div class="actions">
+      <button class="btn ghost" id="back">← Back</button>
+      <span class="hint" id="hint"></span>
+      <button class="btn" id="next">${i===flow.length-1?"Finish":"Next →"}</button>
+    </div></div></section>`);
+  app.innerHTML=""; app.appendChild(card);
+  const body = card.querySelector("#body"), nextB = card.querySelector("#next");
+  const valid = () => { const v=A[q.id]; nextB.disabled = !q.optional && (v==null || (Array.isArray(v)&&!v.length) || v===""); };
+
+  if (q.t==="single"||q.t==="multi"){
+    const wrap = el(`<div class="opts ${q.cols===2?"two":""}" role="${q.t==="single"?"radiogroup":"group"}" aria-labelledby="qt"></div>`);
+    opts.forEach(o=>{
+      const [val,emo,label] = Array.isArray(o)?o:[o,"",o];
+      const b = el(`<button type="button" class="opt ${q.t==="single"?"radio":""}" role="${q.t==="single"?"radio":"checkbox"}" aria-checked="false">
+        <span class="tick"></span>${emo?`<span class="emo">${emo}</span>`:""}<span>${label}</span></button>`);
+      const cur = A[q.id];
+      if (q.t==="single" ? cur===val : (cur||[]).includes(val)) b.setAttribute("aria-checked","true");
+      b.onclick = () => {
+        if (q.t==="single"){ A[q.id]=val; wrap.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-checked","false")); b.setAttribute("aria-checked","true"); save(); valid(); setTimeout(next,260); }
+        else {
+          let arr = A[q.id]||[];
+          if (val==="none") arr = arr.includes("none")?[]:["none"];
+          else { arr = arr.filter(x=>x!=="none"); arr = arr.includes(val)?arr.filter(x=>x!==val):[...arr,val]; }
+          A[q.id]=arr; save();
+          wrap.querySelectorAll(".opt").forEach((x,ix)=>{ const v=Array.isArray(opts[ix])?opts[ix][0]:opts[ix]; x.setAttribute("aria-checked", arr.includes(v)?"true":"false"); });
+          card.querySelector("#hint").textContent = arr.length? `${arr.length} selected` : "";
+          valid();
+        }
+      };
+      wrap.appendChild(b);
+    });
+    body.appendChild(wrap);
+    if (q.t==="multi" && (A[q.id]||[]).length) card.querySelector("#hint").textContent = `${A[q.id].length} selected`;
+  }
+  if (q.t==="scale"){
+    const wrap = el(`<div><div class="scale" role="radiogroup" aria-labelledby="qt"></div><div class="scale-ends"><span>${q.ends[0]}</span><span>${q.ends[1]}</span></div></div>`);
+    const s = wrap.querySelector(".scale");
+    [1,2,3,4,5].forEach(n=>{
+      const b = el(`<button type="button" class="opt radio" role="radio" aria-checked="${A[q.id]===n}"><b>${n}</b><small>${q.labels[n-1]}</small></button>`);
+      b.onclick=()=>{A[q.id]=n; save(); s.querySelectorAll(".opt").forEach(x=>x.setAttribute("aria-checked","false")); b.setAttribute("aria-checked","true"); valid(); setTimeout(next,260);};
+      s.appendChild(b);
+    });
+    body.appendChild(wrap);
+  }
+  if (q.t==="text"||q.t==="long"){
+    const f = el(q.t==="text"?`<input type="text" placeholder="${q.ph}" aria-labelledby="qt">`:`<textarea rows="3" placeholder="${q.ph}" aria-labelledby="qt"></textarea>`);
+    f.value = A[q.id]||""; f.oninput=()=>{A[q.id]=f.value; save(); valid();};
+    body.appendChild(f); setTimeout(()=>f.focus(),50);
+  }
+  if (q.t==="contact"){
+    const w = el(`<div>
+      <input type="text" id="cname" placeholder="First name" autocomplete="given-name">
+      <input type="email" id="cemail" placeholder="Email" autocomplete="email">
+      <div class="opts" style="margin-top:12px">
+        <button type="button" class="opt" role="checkbox" aria-checked="false" data-k="founder"><span class="tick"></span><span class="emo">🏆</span><span>Tell me about becoming a Founding Member</span></button>
+        <button type="button" class="opt" role="checkbox" aria-checked="false" data-k="followup"><span class="tick"></span><span class="emo">📞</span><span>I'm open to a 15-minute follow-up conversation</span></button>
+      </div></div>`);
+    const c = A.contact||{};
+    w.querySelector("#cname").value=c.name||""; w.querySelector("#cemail").value=c.email||"";
+    w.querySelectorAll("[data-k]").forEach(b=>{ if(c[b.dataset.k]) b.setAttribute("aria-checked","true");
+      b.onclick=()=>{ c[b.dataset.k]=!c[b.dataset.k]; b.setAttribute("aria-checked",String(!!c[b.dataset.k])); A.contact=c; save(); }; });
+    w.querySelector("#cname").oninput=e=>{c.name=e.target.value; A.contact=c; save();};
+    w.querySelector("#cemail").oninput=e=>{c.email=e.target.value; A.contact=c; save();};
+    body.appendChild(w);
+  }
+  valid();
+  card.querySelector("#back").onclick = back;
+  nextB.onclick = next;
+}
+
+function next(){
+  if (i < flow.length-1){ i++; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+  else if (!deep){ result(); }
+  else { result(); }
+}
+function back(){ if (i>0){ i--; const q=flow[i]; if(q.dyn && (A[q.dyn]||[]).length<=1) return back(); render(); } else intro(); }
+
+function result(){
+  i = flow.length; setBoard();
+  const k = scoreDNA(A), d = DNA[k];
+  A.dna = k; A.completed_at = new Date().toISOString(); A.deep = deep; save();
+  submit();
+  const methods = (A.pay_methods||[]).length;
+  app.innerHTML="";
+  const s = el(`<section class="screen result-wrap">
+    <div class="eyebrow" style="text-align:center">Your family's Sports Money DNA</div>
+    <div class="tcard" style="--c1:${d.c1};--c2:${d.c2}"><div class="tcard-in">
+      <div class="tc-top"><img src="{{LOGO_WORDMARK}}" alt=""><span class="tc-tag">${d.tag}</span></div>
+      <div class="tc-emoji">${d.emoji}</div>
+      <div class="tc-name"><small>Sports Money DNA</small>${d.name}</div>
+      <p class="tc-desc">${d.desc}</p>
+      <div class="tc-stats">
+        <div><b>${methods}</b><span>Ways you pay</span></div>
+        <div><b>${A.stress||"–"}/5</b><span>Stress level</span></div>
+        <div><b>${(A.spend||"–").replace("Honestly, I don't know","?")}</b><span>Per year</span></div>
+      </div>
+    </div></div>
+    <div class="play"><h3>Your next play</h3><p>${d.play}</p></div>
+    <div class="card" style="text-align:center">
+      <h2>Join the families figuring this out together</h2>
+      <p class="lead" style="margin-top:8px">Ball Without Boundaries is where sports meets the financial intelligence to fund it. Get the full playbook for your DNA type, plus the community.</p>
+      <div class="actions" style="justify-content:center"><a class="btn big" href="${JOIN_URL}" style="text-decoration:none;text-align:center">Join Ball Without Boundaries →</a></div>
+      ${deep?"":`<button class="btn ghost" id="deepBtn" style="margin-top:6px">Got 5 more minutes? Take the Deep Dive and help us crack the code →</button>`}
+      <p class="fine">Educational content only, not individual financial, tax or legal advice. Your answers are private and only shared as anonymous group totals.</p>
+    </div>
+  </section>`);
+  app.appendChild(s);
+  const db = s.querySelector("#deepBtn");
+  if (db) db.onclick = () => { deep = true; flow = [...Q, ...DEEP]; i = Q.length; render(); };
+  confetti(d.c1, d.c2);
+}
+
+function submit(){
+  if (!SUBMIT_URL) { console.log("BWB DNA (not sent: SUBMIT_URL empty)", A); return; }
+  const payload = {...A, contact_name:(A.contact||{}).name||"", contact_email:(A.contact||{}).email||"",
+    wants_founder:!!(A.contact||{}).founder, wants_followup:!!(A.contact||{}).followup, page:location.href};
+  delete payload.contact;
+  fetch(SUBMIT_URL,{method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain"}, body:JSON.stringify(payload)}).catch(()=>{});
+}
+
+function confetti(c1,c2){
+  const cv = document.getElementById("confetti"), x = cv.getContext("2d");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  cv.width = innerWidth; cv.height = innerHeight;
+  const cols=[c1,c2,"#F4FAFB","#38B259"], P=[...Array(140)].map(()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,
+    r:4+Math.random()*6,c:cols[Math.floor(Math.random()*cols.length)],vy:2+Math.random()*3,vx:-1.5+Math.random()*3,a:Math.random()*6}));
+  let t=0; (function f(){ x.clearRect(0,0,cv.width,cv.height); P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.a+=.1;
+    x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);x.restore();});
+    if(++t<200) requestAnimationFrame(f); else x.clearRect(0,0,cv.width,cv.height); })();
+}
+
+intro();
+</script>
+</body>
+</html>
