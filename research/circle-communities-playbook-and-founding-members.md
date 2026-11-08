@@ -63,6 +63,7 @@ Guides call it the **"Grandfather Method"**: existing members keep free access *
 
 ### The single most important move: tell them the plan on day one
 The "am I using them?" feeling disappears when **there's no hidden agenda**. When you invite them, say plainly:
+
 - It's free for you, **for life**.
 - Later we'll open it to the public at a paid price.
 - You are getting in free *because* you're helping build it.
@@ -73,30 +74,39 @@ Someone who says yes to that has given informed consent. You're not taking advan
 
 > Hi [Name],
 >
+
 > I'm building something I care deeply about: **ONE BILL**, a community helping Americans take control of their money one bill at a time.
 >
+
 > I'm hand-picking [25–50] Founding Members, and you're one of the first people I thought of because [specific, genuine reason].
 >
+
 > **Here's the deal, fully transparent:**
 > - Your membership is **free for life**. No catch, no "trial."
 > - You'll get the **Founding Member** badge and a permanent place on our Founders Wall.
 > - You'll have a real say in what we build, through a private Founders channel and a direct line to me.
 > - Later in [month], we'll open ONE BILL to the public at $[X]/month. **You'll never pay.**
 >
+
 > What I'm asking: show up, share what you know when it feels right, and tell me honestly what's working and what isn't.
 >
+
 > Would you be one of our founders?
 >
+
 > [Your name]
 
 ### Sample announcement when you open to paid members
 
 > Founders, big news: ONE BILL opens to the public on [date] at $[X]/month.
 >
+
 > **Nothing changes for you.** You're founders: free for life, exactly as promised.
 >
+
 > Here's why paid membership matters *to you*: it funds the things you asked for, like [more live sessions, the retreat, expert guests]. New members will also find a community you built, which is why it's worth paying for.
 >
+
 > One ask: if you know someone who needs ONE BILL, your personal invite means more than any ad. As a thank-you, [founders get X for every referral].
 
 ---
@@ -104,6 +114,7 @@ Someone who says yes to that has given informed consent. You're not taking advan
 ## Part 5: "Am I Using Them?" Bridging the Value Gap
 
 **First, the honest answer: is it really a thing?** Sometimes, but only in specific situations. People feel used when:
+
 - The plan is **hidden** and they find out later (fix: tell them upfront).
 - Their content or expertise is **packaged and sold without credit** (fix: name them and spotlight them).
 - They're asked to **work** (teach, run sessions) with nothing back (fix: pay them, share revenue, or give them a real title).
@@ -120,6 +131,7 @@ Avoid those four and the research suggests founders feel **honored, not used**. 
 5. **Let the evidence answer the doubt.** One research source suggests asking: "Can I point to evidence that contradicts this doubt?" After 30 days, ask founders: "What has ONE BILL done for you?" Their answers will be your proof, in their words.
 
 ### Ways to make the value exchange visibly fair (pick 3–4)
+
 - **Free for life**, in writing.
 - **Founding Member badge** and a Founders Wall: permanent recognition.
 - **Founders Council**: a real vote on topics, features and the retreat location.
@@ -145,6 +157,7 @@ Avoid those four and the research suggests founders feel **honored, not used**. 
 ---
 
 ## Sources
+
 - Circle customer stories: https://circle.so/customer-stories
 - Exit Five on Circle: https://circle.so/customer-stories/exit-five · origin story: https://communitygaps.beehiiv.com/p/how-exit-five-became-a-5-000-member-b2b-marketing-powerhouse · https://x.com/davegerhardt/status/1896924015542899144 · https://growthcommunity.co/exit-five-case-study/
 - SPI Community: https://circle.so/customer-stories/spi-community · https://www.smartpassiveincome.com/community/

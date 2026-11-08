@@ -53,6 +53,7 @@ This is exactly Scott MacGregor's path. He started niche (the Talent Champions C
 **ONE BILL → BWB:** In ONE BILL, when someone's ONE bill is youth sports (and many will be, since families spend $40B+ a year on it), invite them into BWB: "You've got your people. Come meet them."
 
 **Shared assets that link them:**
+
 - The **Sports Family Money DNA survey** (below) runs in BWB, and its anonymous results become ONE BILL content and PR.
 - Same founder, same values, same hospitality standard. The brands are siblings, not strangers.
 - One email list with tags (`bwb`, `onebill`, `both`), so you never double-message people.
@@ -62,18 +63,21 @@ This is exactly Scott MacGregor's path. He started niche (the Talent Champions C
 ## Phased Plan
 
 ### Phase 1 (Months 0–3): BWB launches, and ONE BILL lives inside it
+
 - Hand-pick **25–50 founding sports parents** (free for life, in writing).
 - **Run the Sports Family Money DNA survey** as their first act: "Help us find out the truth about how families really pay for youth sports."
 - Inside BWB, run a monthly **"ONE BILL: The Sports Bill"** challenge. This is your test kitchen for the ONE BILL method.
 - Goal: 50–100 engaged members, plus survey data from at least 200 families (founders share it with their teams).
 
 ### Phase 2 (Months 3–6): Publish the data and prove the method
+
 - Publish **"The Real Cost of the Game: How Sports Families Actually Pay"**, an anonymous findings report. It answers the question nobody else answers (see the "a third go into debt" section below).
 - Pitch it to media, sports podcasts, club directors and Project Play itself. **Original data is the strongest free marketing there is.**
 - Collect ONE BILL wins from BWB members: "Killed our $340/month tournament-travel credit card balance."
 - Open BWB to paid members (founders stay free).
 
 ### Phase 3 (Month 6+): ONE BILL launches on Mighty Networks
+
 - Launch the **free ONE BILL community** with the BWB success stories as proof.
 - Everyone from BWB gets a **ONE BILL Inner Circle founding seat, free**. That's a thank-you that costs you nothing and seeds the new community with engaged people on day one.
 - From here, the referral loop runs both ways.
@@ -106,11 +110,13 @@ And your other insight is the heart of it: **families aren't going to stop payin
 **Positioning:** "Take control of your money, ONE bill at a time." No budgets to fail at, no shame, just one bill.
 
 **Structure:**
+
 - **Free community** (the mission): weekly "What's your ONE bill?" prompts, wins feed, a community "Bills Killed" counter, beginner guides.
 - **Paid Inner Circle**: the monthly Kill-a-Bill challenge with live coaching, accountability buddies, expert Q&As (insurance, phone and utility negotiators, credit counselors), and templates and scripts ("how to call your provider").
 - **Topic spaces by bill type:** Housing · Car · Insurance · Phone and Internet · Subscriptions · Credit Cards · **Kids' Activities** (the bridge to BWB) · Medical.
 
 **The ONE BILL member journey:**
+
 1. **Join free** and answer "What's your ONE bill?"
 2. **Get matched** to the space and the monthly challenge for that bill.
 3. **Kill it** (lower it, refinance it or pay it off) and post the win.
@@ -124,6 +130,7 @@ And your other insight is the heart of it: **families aren't going to stop payin
 ## A Word on Trust and Compliance
 
 You'll be collecting sensitive financial information, so the experience has to feel safe.
+
 - Let people **answer anonymously**, and use **ranges** instead of exact dollar amounts.
 - Say plainly: "**We will never sell your data.** Results are only shared in aggregate."
 - Keep ONE BILL in **education and community, not individualized financial advice**, unless you have licensed professionals involved. Have a lawyer glance at the privacy notice and disclaimers before launch.
@@ -131,6 +138,7 @@ You'll be collecting sensitive financial information, so the experience has to f
 ---
 
 ## Sources
+
 - Aspen Project Play 2024 parent survey: https://projectplay.org/news/2025/2/24/project-play-survey-family-spending-on-youth-sports-rises-46-over-five-years
 - Good Sports / Harris Poll: https://www.goodsports.org/blog-post/the-cost-of-play-what-new-research-reveals-about-youth-sports-access/
 - New York Life 2025: https://www.newyorklife.com/articles/cost-of-youth-sports-survey

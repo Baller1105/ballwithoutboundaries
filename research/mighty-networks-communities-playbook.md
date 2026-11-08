@@ -83,6 +83,7 @@ Everything in the Circle doc still applies: **tell founders the plan on day one,
 
 ### 1. Use freemium to make "free founders" feel even fairer
 With a **free public tier plus a paid inner tier**, the story becomes simple and generous:
+
 - **Free ONE BILL Community**: open to everyone, which serves your mission of financial awareness for all Americans.
 - **ONE BILL Inner Circle (paid)**: live coaching, challenges, Q&As, courses.
 - **Founding Members get the Inner Circle free for life.**
@@ -96,6 +97,7 @@ When Versed moved platforms, **almost all founding members followed**, because t
 Oiselle uses **local team leaders**, and Wealth Without Wall Street has a dedicated community lead. Offer founders roles they'd be proud of: **Founding Host** (runs a monthly topic), **City Captain** (local meetups) or **Bill Buddy** (welcomes new members). Roles create ownership, and ownership makes it *their* community too, not something they're giving to you.
 
 ### Updated founder pitch line (for the freemium model)
+
 > "ONE BILL will always have a free community for every American who wants to get smarter about money. That's the mission. Later we'll add a paid Inner Circle with deeper coaching and live programs. As a Founding Member, you'll be in the Inner Circle **free, for life**, because you helped build it."
 
 ---
@@ -113,6 +115,7 @@ Oiselle uses **local team leaders**, and Wealth Without Wall Street has a dedica
 ---
 
 ## Sources
+
 - Mighty Networks homepage (finance community, horror and meditation stats): https://www.mightynetworks.com/ · community features: https://www.mightynetworks.com/community
 - Wealth Without Wall Street: https://www.mightynetworks.com/case-studies/wealth-without-wall-street · https://www.casestudies.com/company/mighty-networks/case-study/theres-another-path-to-financial-freedom-and-wealth-without-wall-street-is-showing-all-4500-of-its-members-the-way
 - WealthBuilders: https://www.mightynetworks.com/case-studies/wealth-builders · https://www.mightynetworks.com/pro/case-studies/heres-how-ashley-fox-launched-the-wealth-builders-community-and-generated
